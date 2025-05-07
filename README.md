@@ -140,7 +140,7 @@ Tip: `max_new_tokens` parameter can be used to control the length of the respons
 
 ## Run with Python or Gradio from Command Line
 
-Run the app from the command line (making sure you’ve activated your virtual environment) with python {your_file}.py or if you want the app to reload when changes are detected in your file use the gradio command like this: gradio {your_file}.py!
+Run the app from the command line (making sure you’ve activated your virtual environment) with python {your_file}.py or if you want the app to reload when changes are detected in your file use the gradio command like this: gradio {your_file}.py! Then, open your browser and navigate to the url provided after running the command.
 
 ## Resources:
 
