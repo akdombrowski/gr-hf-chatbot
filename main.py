@@ -1,5 +1,6 @@
 from os import getenv
 from platform import processor
+from typing import Dict, List
 
 import gradio as gr
 import torch
@@ -39,14 +40,14 @@ if gr.NO_RELOAD:
     )
 
 
-def use_chat_template(role="user", message=""):
+def use_chat_template(role="user", message="") -> List[Dict[str, str]]:
     template = CHAT_TEMPLATE
     CHAT_TEMPLATE["role"] = role
     CHAT_TEMPLATE["content"] = message
     return [template]
 
 
-def smol_predict(message, history):
+def smol_predict(message, history) -> str:
     message_as_chat = use_chat_template("user", message)
 
     # call pipeline
@@ -57,13 +58,13 @@ def smol_predict(message, history):
     # Default error message
     generated_text = "Whoops. Had some troubles. Mind trying again?"
 
-    if len(response) > 0 and response[0]["generated_text"]:
-        generated_text = "".join([m["generated_text"] for m in response])
+    if type(response) is List[Dict[str, str]]:
+        generated_text = "".join([msg["generated_text"] for msg in response])
 
     return generated_text
 
 
-def llama3_2_predict(message, history):
+def llama3_2_predict(message, history) -> str:
     message_as_chat = use_chat_template("user", message)
 
     response = llama3_2_pipe(
@@ -76,7 +77,7 @@ def llama3_2_predict(message, history):
     # Default error message
     generated_text = "Whoops. Had some troubles. Mind trying again?"
 
-    if response[0]["generated_text"]:
+    if type(response) is List[Dict[str, str]]:
         generated_text = "".join([msg["generated_text"] for msg in response])
 
     return generated_text
