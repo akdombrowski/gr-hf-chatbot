@@ -15,7 +15,6 @@ load_dotenv(".env.local")
 CHAT_TEMPLATE = {"role": "user", "content": ""}
 SMOL_MODEL = "HuggingFaceTB/SmolLM2-135M-Instruct"
 LLAMA3_2_MODEL = "meta-llama/Llama-3.2-1B-Instruct"
-# LLAMA3_2_MODEL = "google/flan-t5-base"
 
 smol_pipe: Pipeline
 llama3_2_pipe: Pipeline
