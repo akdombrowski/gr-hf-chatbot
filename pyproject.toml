@@ -1,0 +1,15 @@
+[project]
+name = "gr-hf-chatbot"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "gradio>=5.29.0",
+ "python-dotenv>=1.1.0",
+ "torch>=2.7.0",
+ "transformers>=4.51.3",
+]
+
+[project.optional-dependencies]
+plot = ["hf-xet>=1.1.0"]
