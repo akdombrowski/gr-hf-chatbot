@@ -69,7 +69,7 @@ def llama3_2_predict(message, history):
     response = llama3_2_pipe(
         message_as_chat,
         return_full_text=False,
-        max_new_tokens=50,
+        max_new_tokens=256,
         truncation=False,
     )
 
@@ -93,62 +93,59 @@ def vote(like_data: gr.LikeData):
 
 
 with gr.Blocks(fill_height=True) as demo:
-    gr.Markdown("# SMOL Chatbot")
+    with gr.Row():
+        with gr.Column():
+            gr.Markdown("# SMOL Chatbot")
+            smol_chatbot = gr.Chatbot(
+                type="messages",
+                placeholder="""# Hi! I'm Smolly 👋\n 
+  ### 😊 A big brain in a little package. Ask Me Anything""",
+                # height="20vh",
+                label="smol chatbot",
+                resizable=True,
+                avatar_images=(
+                    None,
+                    "https://huggingface.co/front/assets/huggingface_logo-noborder.svg",
+                ),
+                show_copy_all_button=True,
+                watermark="built by frontegg",
+            )
+            smol_chatbot.like(vote, None, None)
+            smol_chat = gr.ChatInterface(
+                fn=smol_predict,
+                type="messages",
+                chatbot=smol_chatbot,
+                autofocus=True,
+                examples=["What's the smallest model?", "What's an LLM?", "Where is Smallville?"],
+            )
 
-    smol_chatbot = gr.Chatbot(
-        type="messages",
-        placeholder="""# Hi! I'm Smolly 👋\n 
-### 😊 A big brain in a little package. Ask Me Anything""",
-        # height="20vh",
-        label="smol chatbot",
-        min_height="10vh",
-        max_height="40vh",
-        resizable=True,
-        avatar_images=(
-            None,
-            "https://huggingface.co/front/assets/huggingface_logo-noborder.svg",
-        ),
-        layout="panel",
-        show_copy_all_button=True,
-        watermark="built by frontegg",
-    )
-    smol_chatbot.like(vote, None, None)
-    smol_chat = gr.ChatInterface(
-        fn=smol_predict,
-        type="messages",
-        chatbot=smol_chatbot,
-        autofocus=True,
-        examples=["What's the smallest model?", "What's an LLM?", "Where is Smallville?"],
-    )
+    with gr.Row():
+        with gr.Column():
+            gr.Markdown("# llama3.2 Chatbot")
 
-    gr.Markdown("# llama3.2 Chatbot")
-
-    llama_chatbot = gr.Chatbot(
-        type="messages",
-        placeholder="""<h1>Me llamo <strong>Llama</strong> 🦙</h1><h3>😊 I like eating grass and answering questions. Ask Me Anything</h3>""",
-        resizable=True,
-        min_height="10vh",
-        max_height="40vh",
-        avatar_images=(
-            None,
-            "llama.jpg",
-        ),
-        layout="panel",
-        show_copy_all_button=True,
-        watermark="built by frontegg",
-    )
-    llama_chatbot.like(vote, None, None)
-    llama_chat = gr.ChatInterface(
-        fn=llama3_2_predict,
-        type="messages",
-        chatbot=llama_chatbot,
-        autofocus=False,
-        examples=[
-            "Do llamas really like to eat grasss?",
-            "Is llama fur soft?",
-            "What colors are llamas?",
-        ],
-    )
+            llama_chatbot = gr.Chatbot(
+                type="messages",
+                placeholder="""<h1>Me llamo <strong>Llama</strong> 🦙</h1><h3>😊 I like eating grass and answering questions. Ask Me Anything</h3>""",
+                resizable=True,
+                avatar_images=(
+                    None,
+                    "llama.jpg",
+                ),
+                show_copy_all_button=True,
+                watermark="built by frontegg",
+            )
+            llama_chatbot.like(vote, None, None)
+            llama_chat = gr.ChatInterface(
+                fn=llama3_2_predict,
+                type="messages",
+                chatbot=llama_chatbot,
+                autofocus=False,
+                examples=[
+                    "Do llamas really like to eat grasss?",
+                    "Is llama fur soft?",
+                    "What colors are llamas?",
+                ],
+            )
 
 
 if __name__ == "__main__":
