@@ -1,4 +1,3 @@
-import logging
 from os import getenv
 from platform import processor
 
@@ -21,15 +20,6 @@ llama3_2_pipe: Pipeline
 
 
 if gr.NO_RELOAD:
-    logger = logging.getLogger(f"{__name__}.predict")
-    if logger.hasHandlers():
-        logger.handlers.clear()
-    handler = logging.StreamHandler()
-    formatter = logging.Formatter(f"{__name__}.predict---%(asctime)s - %(levelname)s - %(message)s")
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
-    logger.setLevel(logging.INFO)
-
     # "cuda" if torch detects availability, else "mps" if processor is "arm" (for Apple silicon)
     # otherwise, "cpu" is the default
     device = (
@@ -39,7 +29,6 @@ if gr.NO_RELOAD:
         if processor() == "arm"
         else "cpu"
     )
-    logging.info("device=%s", device)
 
     smol_pipe = pipeline("text-generation", model=SMOL_MODEL, device=device)
     # If using a public gated model, you'll need to create a Hugging Face token with read access to
@@ -48,10 +37,6 @@ if gr.NO_RELOAD:
     llama3_2_pipe = pipeline(
         "text-generation", model=LLAMA3_2_MODEL, device=device, token=getenv("HF_TOKEN")
     )
-
-
-def log_info(message, *args):
-    logger.info(message, *args)
 
 
 def use_chat_template(role="user", message=""):
@@ -74,7 +59,6 @@ def smol_predict(message, history):
 
     if len(response) > 0 and response[0]["generated_text"]:
         generated_text = "".join([m["generated_text"] for m in response])
-    log_info("generated text response: \n%s\n", generated_text)
 
     return generated_text
 
@@ -89,7 +73,6 @@ def llama3_2_predict(message, history):
         truncation=False,
     )
 
-    log_info("generated text response: \n%s\n", response)
     # Default error message
     generated_text = "Whoops. Had some troubles. Mind trying again?"
 
@@ -99,10 +82,10 @@ def llama3_2_predict(message, history):
     return generated_text
 
 
+# add thumbs up and thumbs down icons to let the user vote on responses
 def vote(like_data: gr.LikeData):
     message = like_data.value[0]
     was_liked = like_data.liked
-    logger.info("\nbot msg:\n%s \nwas liked: \n%s \n", message, was_liked)
     if was_liked:
         print("Response liked: " + message)
     else:

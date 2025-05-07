@@ -138,8 +138,14 @@ pipeline(user_chat_message, return_full_text=False)
 
 Tip: `max_new_tokens` parameter can be used to control the length of the response, but you might end up with sentences that are cut off. You can play around with the value or add something like a length penalty to make it more likely to end a response before reaching the max. The higher the max value, though, the longer it'll likely take to process.
 
+## Run with Python or Gradio from Command Line
+
+Run the app from the command line (making sure you’ve activated your virtual environment) with python {your_file}.py or if you want the app to reload when changes are detected in your file use the gradio command like this: gradio {your_file}.py!
+
 ## Resources:
 
+* [Gradio Docs: ChatInterface](https://www.gradio.app/docs/gradio/chatinterface)
+* [Gradio Docs: Chatbot](https://www.gradio.app/docs/gradio/chatbot)
 * [HF Docs: Transformers Pipelines](https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/pipelines#pipelines)
 * [HF Docs: Chat with Models](https://huggingface.co/docs/transformers/conversations)
 
