@@ -7,8 +7,12 @@ How to build a chatbot with gradio, hugging face (and their transformers library
 **Highly recommended**
 
 Create a python virtual environment with `venv` or another virtual environment manager like
-[`uv`](https://docs.astral.sh/uv/pip/environments/#creating-a-virtual-environment) or
-[`virtualenv`](https://virtualenv.pypa.io/en/latest/user_guide.html#introduction)
+
+- [venv](https://docs.python.org/3/library/venv.html)<sup>*</sup>
+- [uv](https://docs.astral.sh/uv/pip/environments/#creating-a-virtual-environment) 
+- [virtualenv](https://virtualenv.pypa.io/en/latest/user_guide.html#introduction)
+
+ <sup>**built into python3*</sup>
 
 ### venv
 
@@ -98,8 +102,7 @@ top of the page:
 
 e.g.,
 
-- `HuggingFaceTB/SmolLM2-135M-Instruct` for
-  https://huggingface.co/HuggingFaceTB/SmolLM2-135M-Instruct
+- `HuggingFaceTB/SmolLM2-135M-Instruct` for https://huggingface.co/HuggingFaceTB/SmolLM2-135M-Instruct
 - `meta-llama/Llama-3.2-1B-Instruct` for https://huggingface.co/meta-llama/Llama-3.2-1B-Instruct
 
 ### Using High-Level Transformers Pipeline
