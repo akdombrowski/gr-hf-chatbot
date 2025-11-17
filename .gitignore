@@ -189,7 +189,8 @@ cython_debug/
 .DS_Store
 .AppleDouble
 .LSOverride
-Icon[]
+Icon[
+]
 
 # Thumbnails
 ._*
@@ -209,3 +210,8 @@ Icon[]
 Network Trash Folder
 Temporary Items
 .apdisk
+
+
+### dotenv ###
+.env*
+!.env.example

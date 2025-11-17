@@ -105,6 +105,26 @@ e.g.,
 - `HuggingFaceTB/SmolLM2-135M-Instruct` for https://huggingface.co/HuggingFaceTB/SmolLM2-135M-Instruct
 - `meta-llama/Llama-3.2-1B-Instruct` for https://huggingface.co/meta-llama/Llama-3.2-1B-Instruct
 
+If the model is gated, you'll need to [authenticate](https://huggingface.co/docs/huggingface_hub/quick-start#login), e.g.,
+
+with [huggingface_hub](https://huggingface.co/docs/huggingface_hub/quick-start#installation):
+
+```
+hf auth login
+```
+
+or via python:
+
+```py
+from huggingface_hub import login
+login()
+```
+
+or 
+
+**currently setup for:** directly with the token and env variable `HF_TOKEN` (duplicate [.env.example](/.env.example) named `.env`)
+
+
 ### Using High-Level Transformers Pipeline
 
 The Pipelines in the Transformers library simplifies the process by handling a lot of the work
