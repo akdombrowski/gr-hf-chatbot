@@ -64,6 +64,13 @@ pip install -U transformers gradio torch
 uv add transformers gradio torch
 ```
 
+or
+
+installing packages using the uv.lock file:
+```sh
+uv sync
+```
+
 ### Building with Gradio
 
 Gradio provides a ChatInterface that makes it easy to create a quick chat interface. Hugging Face's
