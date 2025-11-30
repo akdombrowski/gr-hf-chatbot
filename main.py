@@ -1,6 +1,5 @@
 from os import getenv
 from platform import processor
-from typing import Dict, List, Optional
 
 import gradio as gr
 import torch
@@ -49,7 +48,7 @@ llama3_2_pipe: Pipeline = pipeline(
 )
 
 
-def create_chat_message(role: str = "user", content: str = "") -> List[Dict[str, str]]:
+def create_chat_message(role: str = "user", content: str = "") -> list[dict[str, str]]:
     """
     Create a chat message in the format expected by the model.
 
@@ -100,7 +99,7 @@ def generate_response(
         return DEFAULT_ERROR_MESSAGE
 
 
-def smol_predict(message: str, history: List[List[str]]) -> str:
+def smol_predict(message: str, history: list[list[str]]) -> str:
     """
     Generate a response using the SMOL model.
 
@@ -114,7 +113,7 @@ def smol_predict(message: str, history: List[List[str]]) -> str:
     return generate_response(smol_pipe, message, truncation=True)
 
 
-def llama3_2_predict(message: str, history: List[List[str]]) -> str:
+def llama3_2_predict(message: str, history: list[list[str]]) -> str:
     """
     Generate a response using the Llama 3.2 model.
 
