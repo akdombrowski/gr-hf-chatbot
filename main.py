@@ -108,7 +108,6 @@ with gr.Blocks(fill_height=True) as demo:
                     None,
                     "https://huggingface.co/front/assets/huggingface_logo-noborder.svg",
                 ),
-                show_copy_all_button=True,
                 watermark="built by frontegg",
             )
             smol_chatbot.like(vote, None, None)
@@ -132,7 +131,6 @@ with gr.Blocks(fill_height=True) as demo:
                     None,
                     "llama.jpg",
                 ),
-                show_copy_all_button=True,
                 watermark="built by frontegg",
             )
             llama_chatbot.like(vote, None, None)
