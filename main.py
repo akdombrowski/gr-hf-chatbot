@@ -20,10 +20,11 @@ LLAMA3_2_MODEL = "meta-llama/Llama-3.2-1B-Instruct"
 MAX_NEW_TOKENS = 256
 DEFAULT_ERROR_MESSAGE = "Whoops. Had some troubles. Mind trying again?"
 
+
 def get_device() -> str:
     """
     Determine the best available device for model inference.
-    
+
     Returns:
         str: Device name ("cuda", "mps", or "cpu")
     """
@@ -51,11 +52,11 @@ llama3_2_pipe: Pipeline = pipeline(
 def create_chat_message(role: str = "user", content: str = "") -> List[Dict[str, str]]:
     """
     Create a chat message in the format expected by the model.
-    
+
     Args:
         role: The role of the message sender (default: "user")
         content: The content of the message
-        
+
     Returns:
         List containing a single message dictionary
     """
@@ -63,40 +64,37 @@ def create_chat_message(role: str = "user", content: str = "") -> List[Dict[str,
 
 
 def generate_response(
-    pipe: Pipeline,
-    message: str,
-    max_new_tokens: int = MAX_NEW_TOKENS,
-    truncation: bool = True
+    pipe: Pipeline, message: str, max_new_tokens: int = MAX_NEW_TOKENS, truncation: bool = True
 ) -> str:
     """
     Generate a response using the specified pipeline.
-    
+
     Args:
         pipe: The transformer pipeline to use
         message: The user's message
         max_new_tokens: Maximum number of tokens to generate
         truncation: Whether to truncate long inputs
-        
+
     Returns:
         Generated text response or error message
     """
     try:
         message_as_chat = create_chat_message("user", message)
-        
+
         response = pipe(
             message_as_chat,
             return_full_text=False,
             max_new_tokens=max_new_tokens,
             truncation=truncation,
         )
-        
+
         # Extract generated text from response
         if isinstance(response, list) and len(response) > 0:
             if isinstance(response[0], dict) and "generated_text" in response[0]:
                 return response[0]["generated_text"]
-        
+
         return DEFAULT_ERROR_MESSAGE
-        
+
     except Exception as e:
         print(f"Error generating response: {e}")
         return DEFAULT_ERROR_MESSAGE
@@ -105,11 +103,11 @@ def generate_response(
 def smol_predict(message: str, history: List[List[str]]) -> str:
     """
     Generate a response using the SMOL model.
-    
+
     Args:
         message: The user's message
         history: Conversation history (unused but required by Gradio)
-        
+
     Returns:
         Generated text response
     """
@@ -119,11 +117,11 @@ def smol_predict(message: str, history: List[List[str]]) -> str:
 def llama3_2_predict(message: str, history: List[List[str]]) -> str:
     """
     Generate a response using the Llama 3.2 model.
-    
+
     Args:
         message: The user's message
         history: Conversation history (unused but required by Gradio)
-        
+
     Returns:
         Generated text response
     """
@@ -133,7 +131,7 @@ def llama3_2_predict(message: str, history: List[List[str]]) -> str:
 def vote(like_data: gr.LikeData) -> None:
     """
     Handle user feedback on chatbot responses.
-    
+
     Args:
         like_data: Gradio LikeData object containing vote information
     """
@@ -157,17 +155,14 @@ with gr.Blocks(fill_height=True) as demo:
                     None,
                     "https://huggingface.co/front/assets/huggingface_logo-noborder.svg",
                 ),
+                watermark="akdombrowski",
             )
             smol_chatbot.like(vote, None, None)
             smol_chat = gr.ChatInterface(
                 fn=smol_predict,
                 chatbot=smol_chatbot,
                 autofocus=True,
-                examples=[
-                    "What's the smallest model?",
-                    "What's an LLM?",
-                    "Where is Smallville?"
-                ],
+                examples=["What's the smallest model?", "What's an LLM?", "Where is Smallville?"],
             )
 
     with gr.Row():
@@ -180,6 +175,7 @@ with gr.Blocks(fill_height=True) as demo:
                     None,
                     "llama.jpg",
                 ),
+                watermark="akdombrowski",
             )
             llama_chatbot.like(vote, None, None)
             llama_chat = gr.ChatInterface(
